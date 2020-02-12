@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "570898684580",
+    "firebase_url": "https://ketovic-264c8.firebaseio.com",
+    "project_id": "ketovic-264c8",
+    "storage_bucket": "ketovic-264c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570898684580:android:1f8d641c37b9031b36a431",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570898684580-cl1snlh3rcjfh3oeefg2213fkhgqlcco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgAGzSyOuE_OMFkpId7B61B-k-Sg5cqN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570898684580-cl1snlh3rcjfh3oeefg2213fkhgqlcco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
