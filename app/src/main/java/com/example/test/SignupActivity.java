@@ -2,12 +2,16 @@ package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.test.ui.login.LoginActivity;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -34,5 +38,14 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+
+        // TODO: UNCOMMENT THE LINE BELOW TO LINK SIGN UP BUTTON TO HOME PAGE
+//        Button btn1 = (Button) findViewById(R.id.signup_btn);
+//        btn1.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                startActivity(new Intent(SignupActivity.this, Home.class));
+//            }
+//        });
     }
 }

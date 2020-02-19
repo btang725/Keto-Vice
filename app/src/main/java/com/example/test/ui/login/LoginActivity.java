@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,7 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.test.MainActivity;
 import com.example.test.R;
+import com.example.test.SignupActivity;
 import com.example.test.ui.login.LoginViewModel;
 import com.example.test.ui.login.LoginViewModelFactory;
 
@@ -69,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
+                    // TODO: UNCOMMENT THE LINE BELOW TO LINK SIGN IN BUTTON TO HOME PAGE
+//                    startActivity(new Intent(LoginActivity.this, Home.class));
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
@@ -117,11 +122,12 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
+        final EditText usernameEditText = findViewById(R.id.username);
+        String welcome = "Welcome " + usernameEditText.getText().toString() + "!";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
