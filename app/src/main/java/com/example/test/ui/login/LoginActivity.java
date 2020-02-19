@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.R;
-import com.example.test.ui.login.LoginViewModel;
-import com.example.test.ui.login.LoginViewModelFactory;
 
 import com.example.test.Home;
 
@@ -73,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    Button btn2 = (Button) findViewById(R.id.button2);
+                    Button btn2 = (Button) findViewById(R.id.signin);
 
                     startActivity(new Intent(LoginActivity.this, Home.class));
 
