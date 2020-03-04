@@ -1,6 +1,7 @@
 package com.example.test.ui.login;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,6 +29,8 @@ import com.example.test.R;
 import com.example.test.SignupActivity;
 import com.example.test.ui.login.LoginViewModel;
 import com.example.test.ui.login.LoginViewModelFactory;
+
+import com.example.test.Home;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -75,6 +78,10 @@ public class LoginActivity extends AppCompatActivity {
                     // TODO: UNCOMMENT THE LINE BELOW TO LINK SIGN IN BUTTON TO HOME PAGE
 //                    startActivity(new Intent(LoginActivity.this, Home.class));
                     updateUiWithUser(loginResult.getSuccess());
+                    Button btn2 = (Button) findViewById(R.id.button2);
+
+                    startActivity(new Intent(LoginActivity.this, Home.class));
+
                 }
                 setResult(Activity.RESULT_OK);
 
