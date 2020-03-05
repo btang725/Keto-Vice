@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     // TODO: UNCOMMENT THE LINE BELOW TO LINK SIGN IN BUTTON TO HOME PAGE
 //                    startActivity(new Intent(LoginActivity.this, Home.class));
                     updateUiWithUser(loginResult.getSuccess());
-                    Button btn2 = (Button) findViewById(R.id.button2);
+                    Button btn2 = (Button) findViewById(R.id.buttonSignUp);
 
                     startActivity(new Intent(LoginActivity.this, Home.class));
 
