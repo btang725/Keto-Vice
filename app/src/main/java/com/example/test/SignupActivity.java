@@ -1,12 +1,13 @@
 package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,6 +34,9 @@ public class SignupActivity extends AppCompatActivity {
     //Private Variables
     private DatabaseReference myRef;    //Testing a reference for Firebase
     private FirebaseDatabase fbd;
+
+public class SignupActivity extends AppCompatActivity {
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,5 +98,12 @@ public class SignupActivity extends AppCompatActivity {
     private void writeNewUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(userID, name, age, height, weight, gd, mail, pass);
         myRef.child("users").child(userID).setValue(u);
+        findViewById(R.id.signup_button).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                ((Button)findViewById(R.id.signup_button)).setText("test");
+                db.child("Users").child("0001").child("age").setValue("100");
+            }
+        });
     }
 }
