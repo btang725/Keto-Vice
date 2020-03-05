@@ -19,11 +19,25 @@ import com.google.firebase.database.FirebaseDatabase;
 //import User class HERE
 import com.example.test.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignupActivity extends AppCompatActivity {
+
+    //Views
+    EditText et_name = (EditText)findViewById(R.id.editText);
+    EditText et_age = (EditText)findViewById(R.id.editText2);
+    EditText et_height = (EditText)findViewById(R.id.editText3);
+    EditText et_weight = (EditText)findViewById(R.id.editText4);
+    EditText et_mail = (EditText)findViewById(R.id.editText5);
+    EditText et_pass = (EditText)findViewById(R.id.editText6);
+
+    final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     Spinner spinner_s;
     String[] gender = {"Male", "Female"};
     ArrayAdapter<String>arrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,22 +59,11 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        // Go to Home Class after clicking "Sign Up"
-        //TODO: go to recommendation instead
+        //Sign Up Button
         Button btn1 = (Button) findViewById(R.id.signup_btn);
         btn1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(SignupActivity.this, Home.class));
-
-                EditText et_name = (EditText)findViewById(R.id.editText);
-                EditText et_age = (EditText)findViewById(R.id.editText2);
-                EditText et_height = (EditText)findViewById(R.id.editText3);
-                EditText et_weight = (EditText)findViewById(R.id.editText4);
-                EditText et_mail = (EditText)findViewById(R.id.editText5);
-                EditText et_pass = (EditText)findViewById(R.id.editText6);
 
                 String name = et_name.getText().toString();
                 String age = et_age.getText().toString();
@@ -71,17 +74,19 @@ public class SignupActivity extends AppCompatActivity {
 
                 String gd = spinner_s.getSelectedItem().toString();
 
-//                 TODO: Fix this .. does userID need to be a String?
-//                private void writeNewUser(int userID, String name, String age, String height, String weight, String gd, String mail, String pass){
-                    int userID = 0;
-                    User u = new User(userID, name, age, height, weight, gd, mail, pass);
-                    mDatabase.child("users").child(userID).setValue(u);
-                    userID = userID + 1;
-//                }
+                writeNewUser(id, name, age, height, weight, gd, mail, pass);
+                //read save-data firebase link to push? to get unique ID
+
+                //TODO: go to recommendation instead of home page
+                startActivity(new Intent(SignupActivity.this, Home.class));
             }
         });
 
+    }
 
-
+    //this function does a basic write (creating new user) to firebase db
+    private void writeNewUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
+        User u = new User(userID, name, age, height, weight, gd, mail, pass);
+        mDatabase.child("users").child(userID).setValue(u);
     }
 }
