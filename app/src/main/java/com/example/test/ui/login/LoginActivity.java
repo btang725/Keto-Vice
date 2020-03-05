@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    Button btn2 = (Button) findViewById(R.id.signin);
+                    Button btn2 = (Button) findViewById(R.id.buttonSignUp);
 
                     startActivity(new Intent(LoginActivity.this, Home.class));
 
