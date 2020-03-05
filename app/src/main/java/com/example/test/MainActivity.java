@@ -27,22 +27,17 @@ public class MainActivity extends AppCompatActivity {
         //Buttons
         Button buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
         buttonSignUp.setOnClickListener(new View.OnClickListener(){
-          
-        findViewById(R.id.signin).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
-
-
-        Button buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
-        buttonSignIn.setOnClickListener(new View.OnClickListener(){
-
-        findViewById(R.id.signup).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 startActivity(new Intent(MainActivity.this, SignupActivity.class));
+            }
+        });
+
+        Button buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
+        buttonSignIn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
 

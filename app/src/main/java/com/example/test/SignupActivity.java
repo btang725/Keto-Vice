@@ -12,16 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-//import User class HERE
-
-
 public class SignupActivity extends AppCompatActivity {
-
-    //Variables
     EditText et_name;
     EditText et_age;
     EditText et_height;
@@ -34,8 +31,6 @@ public class SignupActivity extends AppCompatActivity {
     //Private Variables
     private DatabaseReference myRef;    //Testing a reference for Firebase
     private FirebaseDatabase fbd;
-
-public class SignupActivity extends AppCompatActivity {
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
@@ -68,7 +63,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         //Sign Up Button
-        Button btnSignUp = (Button) findViewById(R.id.signup_btn);
+        Button btnSignUp = (Button) findViewById(R.id.signup_button);
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
