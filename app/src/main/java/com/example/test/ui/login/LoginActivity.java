@@ -26,10 +26,15 @@ import android.widget.Toast;
 import com.example.test.R;
 
 import com.example.test.Home;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private DatabaseReference myRef;    //Testing a reference for Firebase
+    private FirebaseDatabase fbd;
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        fbd = FirebaseDatabase.getInstance();
+        myRef = fbd.getReference("name");
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -123,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();

@@ -15,9 +15,6 @@ import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class SignupActivity extends AppCompatActivity {
     EditText et_name;
     EditText et_age;
@@ -31,12 +28,11 @@ public class SignupActivity extends AppCompatActivity {
     //Private Variables
     private DatabaseReference myRef;    //Testing a reference for Firebase
     private FirebaseDatabase fbd;
-    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_signup);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
         //Declaring Variables
         et_name = (EditText)findViewById(R.id.firstLast);
         et_age = (EditText)findViewById(R.id.age);
@@ -50,17 +46,6 @@ public class SignupActivity extends AppCompatActivity {
         spinner_s = (Spinner)findViewById(R.id.gender_dropdown);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,gender);
         spinner_s.setAdapter(arrayAdapter);
-
-        spinner_s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "Your selection is: " + gender[i], Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         //Sign Up Button
         Button btnSignUp = (Button) findViewById(R.id.signup_button);
@@ -77,8 +62,6 @@ public class SignupActivity extends AppCompatActivity {
                 String pass = et_pass.getText().toString();
                 String gd = spinner_s.getSelectedItem().toString();
 
-                myRef.setValue(name);             //Testing to see if a change is made in Firebase
-
                 writeNewUser(id, name, age, height, weight, gd, mail, pass);
                 //read save-data firebase link to push? to get unique ID
 
@@ -93,12 +76,5 @@ public class SignupActivity extends AppCompatActivity {
     private void writeNewUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(userID, name, age, height, weight, gd, mail, pass);
         myRef.child("users").child(userID).setValue(u);
-        findViewById(R.id.signup_button).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                ((Button)findViewById(R.id.signup_button)).setText("test");
-                db.child("Users").child("0001").child("age").setValue("100");
-            }
-        });
     }
 }
