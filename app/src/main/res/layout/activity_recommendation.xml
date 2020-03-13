@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecommendationActivity">
+    tools:context=".RecommendationActivity"
+    android:background="@color/colorPrimaryDark">
 
     <Button
         android:id="@+id/buttonDummy"
