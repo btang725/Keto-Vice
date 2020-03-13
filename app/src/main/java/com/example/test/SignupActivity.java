@@ -41,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
         et_mail = (EditText)findViewById(R.id.email);
         et_pass = (EditText)findViewById(R.id.password);
         fbd = FirebaseDatabase.getInstance();
-        myRef = fbd.getReference("name"); //Testing Firebase
+        myRef = fbd.getReference("Users"); //Testing Firebase
 
         spinner_s = (Spinner)findViewById(R.id.gender_dropdown);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,gender);
@@ -52,7 +52,6 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 String id = myRef.push().getKey();          //Generates random key for database
                 String name = et_name.getText().toString();
                 String age = et_age.getText().toString();
@@ -62,19 +61,34 @@ public class SignupActivity extends AppCompatActivity {
                 String pass = et_pass.getText().toString();
                 String gd = spinner_s.getSelectedItem().toString();
 
-                writeNewUser(id, name, age, height, weight, gd, mail, pass);
-                //read save-data firebase link to push? to get unique ID
+                if(et_pass.getText().length() < 5)
+                    Toast.makeText(getApplicationContext(), "Password must be at least 5 characters", Toast.LENGTH_LONG).show();
+                else if(
+                    name.length() == 0
+                    || age.length() == 0
+                    || height.length() == 0
+                    || weight.length() == 0
+                    || mail.length() == 0
+                )
+                {
+                    Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    writeNewUser(id, name, age, height, weight, gd, mail, pass);
 
-                //TODO: go to recommendation instead of home page
-                startActivity(new Intent(SignupActivity.this, Home.class));
+                    //TODO: go to recommendation instead of home page
+                    startActivity(new Intent(SignupActivity.this, Home.class));
+                }
             }
         });
-
     }
 
     //this function does a basic write (creating new user) to firebase db
     private void writeNewUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(userID, name, age, height, weight, gd, mail, pass);
-        myRef.child("users").child(userID).setValue(u);
+        myRef.child(mail).setValue(u);
+
+        System.out.println("very cool");
     }
 }
