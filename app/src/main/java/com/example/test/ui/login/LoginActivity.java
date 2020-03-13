@@ -26,8 +26,14 @@ import android.widget.Toast;
 import com.example.test.R;
 
 import com.example.test.Home;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,11 +51,14 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
+
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         fbd = FirebaseDatabase.getInstance();
-        myRef = fbd.getReference("name");
+        myRef = fbd.getReference("Users");
+
+        HashMap<String, String> login = new HashMap<>();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -125,18 +134,37 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        String email = usernameEditText.getText().toString();
+                        String pass = passwordEditText.getText().toString();
+                        if (snapshot.hasChild(email))
+                        {
+                            String other_pass= ((String) snapshot.child(email).child("password").getValue());
+                            if(other_pass.equals(pass))
+                            {
+                                loginViewModel.login(usernameEditText.getText().toString(),
+                                passwordEditText.getText().toString());
+                            }
+                            else
+                                Toast.makeText(getApplicationContext(), "Unknown email or pass", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                            Toast.makeText(getApplicationContext(), "Unknown email or pass", Toast.LENGTH_LONG).show();
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
         });
     }
-
-
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
