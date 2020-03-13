@@ -1,16 +1,12 @@
 package com.example.test;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,19 +15,36 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class fdaJSONRetriever extends AppCompatActivity {
+public class usdaJSONRetriever extends AppCompatActivity {
     //Variables
-    String fdaJson, APIKey;
-    TextView txtJson;
+    String usdaJson, APIKey;
+    String txtJson;
     ProgressDialog pd;
 
-    fdaJSONRetriever(){
-        APIKey = "2zPcCXIQkwSGELZEl1bcrnzJtv8fOjgRAyuCkQpU";
-        //fdaJson = "https://api.fda.gov/drug/event.json?limit=1"; //Testable String
-        fdaJson = "";
+    //Constructor
+    usdaJSONRetriever(){
+        APIKey = "api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu";
+        usdaJson = "";
+    }
+    //https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&location=Denver+CO
+    //Methods
 
-        new JsonTask().execute(fdaJson); //YOUR URL ADDRESS HERE!!!
-        System.out.println(txtJson);
+    //Gets json from query.
+    private void getJSON(String query) {
+        usdaJson = "https://api.nal.usda.gov/fdc/v1/search?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&generalSearchInput=keto"; //Testable String
+        usdaJson = "https://api.fda.gov/drug/event.json?limit=1";
+        //query = "Cheddar%20Cheese"; //example
+        query.replace(" ", "%20");  //In case of spaces for correct search results.
+        //usdaJson = "https://api.nal.usda.gov/fdc/v1/search?"+APIKey+"&generalSearchInput="+query;
+        new JsonTask().execute(usdaJson); //Will put JSON text into txtJson variable
+
+        System.out.println(txtJson);     //Just testing, erase later...
+        System.out.println("GAY");
+    }
+
+    public String getInformation(String query) {
+        getJSON(query);
+        return txtJson;
     }
 
     //JSON reader
@@ -40,13 +53,14 @@ public class fdaJSONRetriever extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pd = new ProgressDialog(fdaJSONRetriever.this);
+            pd = new ProgressDialog(usdaJSONRetriever.this);
             pd.setMessage("Please wait");
             pd.setCancelable(false);
             pd.show();
         }
 
         protected String doInBackground(String... params) {
+
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -55,6 +69,7 @@ public class fdaJSONRetriever extends AppCompatActivity {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
+
 
                 InputStream stream = connection.getInputStream();
 
@@ -68,7 +83,9 @@ public class fdaJSONRetriever extends AppCompatActivity {
                     Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
+
                 return buffer.toString();
+
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -95,7 +112,7 @@ public class fdaJSONRetriever extends AppCompatActivity {
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            txtJson.setText(result);
+            txtJson = result;
         }
     }
 }
