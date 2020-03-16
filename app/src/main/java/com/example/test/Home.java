@@ -40,5 +40,14 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(Home.this, RecommendationActivity.class));
             }
         });
+
+        // Edit Profile
+        // Recommendation
+        findViewById(R.id.edit_profile).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(Home.this, EditProfileActivity.class));
+            }
+        });
     }
 }
