@@ -21,14 +21,14 @@ import java.net.URL;
 
 public class RecommendationActivity extends AppCompatActivity {
     Button buttonDummy;
-    TextView txtJson;
-    fdaJSONRetriever fda;
+    usdaJSONRetriever usda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation);
 
+        usda = new usdaJSONRetriever();
         buttonDummy = (Button) findViewById(R.id.buttonDummy);
         Toast.makeText(getApplicationContext(), "I fear nothing is here. Better bust that rear before I get near.", Toast.LENGTH_SHORT).show();
 
@@ -36,7 +36,8 @@ public class RecommendationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "You clicked a button, congratulations!", Toast.LENGTH_SHORT).show();
-                System.out.println(txtJson);
+                usda.getInformation("My query");
+                System.out.println("Gay");
             }
         });
     }
