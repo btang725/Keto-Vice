@@ -57,7 +57,7 @@ public class SignupActivity extends AppCompatActivity {
                 String age = et_age.getText().toString();
                 String height = et_height.getText().toString();
                 String weight = et_weight.getText().toString();
-                String mail = et_mail.getText().toString();
+                String mail = et_mail.getText().toString().replace('.', ',');
                 String pass = et_pass.getText().toString();
                 String gd = spinner_s.getSelectedItem().toString();
 
