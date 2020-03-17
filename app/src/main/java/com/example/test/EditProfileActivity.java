@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class EditProfileActivity extends AppCompatActivity {
     EditText ed_name;
     EditText ed_age;
@@ -82,9 +84,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void editCurrentUser(String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(name, age, height, weight, gd, mail, pass);
-        //myRef.child(User.CURRENT.email).removeValue();
-        myRef.child(mail).setValue(u);
-        //User.CURRENT = u;
+        myRef.child(User.CURRENT.email).removeValue();
+        HashMap<String, String> temp = new HashMap<>();
+        
+        User.CURRENT = u;
+        temp.put("name", name);
+        temp.put("age", age);
+        temp.put("height", height);
+        temp.put("weight", weight);
+        temp.put("gender", gd);
+        temp.put("email", mail);
+        temp.put("password", pass);
+
+        myRef.child(mail).setValue(temp);
     }
 }
 

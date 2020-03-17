@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 
+import java.util.HashMap;
+
 public class SignupActivity extends AppCompatActivity {
     EditText et_name;
     EditText et_age;
@@ -82,7 +84,17 @@ public class SignupActivity extends AppCompatActivity {
     //this function does a basic write (creating new user) to firebase db
     private void writeNewUser(String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(name, age, height, weight, gd, mail, pass);
+        HashMap<String, String> temp = new HashMap<>();
         User.CURRENT = u;
-        myRef.child(mail).setValue(u);
+        temp.put("name", name);
+        temp.put("age", age);
+        temp.put("height", height);
+        temp.put("weight", weight);
+        temp.put("gender", gd);
+        temp.put("email", mail);
+        temp.put("password", pass);
+
+        myRef.child(mail).setValue(temp);
+
     }
 }
