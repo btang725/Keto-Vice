@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class RecommendationActivity extends AppCompatActivity {
     Button buttonDummy;
     usdaJSONRetriever usda;
     ProgressDialog pd;
-    TextView txtJson;
+    String txtJson = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class RecommendationActivity extends AppCompatActivity {
                 new JsonTask().execute("https://api.nal.usda.gov/fdc/v1/search?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&generalSearchInput=keto"); //YOUR URL ADDRESS HERE!!!
                 System.out.println("Hey");
                 System.out.println(txtJson);
-
+                System.out.println("Worked?");
             }
         });
     }
@@ -114,7 +115,7 @@ public class RecommendationActivity extends AppCompatActivity {
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            txtJson.setText(result);
+            txtJson=result;
         }
     }
 
