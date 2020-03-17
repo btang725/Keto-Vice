@@ -6,14 +6,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Home extends AppCompatActivity {
+    private String email;
+    private TextView welcomeMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        email = bundle.getString("email");
+        welcomeMsg = findViewById(R.id.welcomeMsg);
+        welcomeMsg.setText("Welcome " + email);
 
         // Restaurant
         findViewById(R.id.restaurant).setOnClickListener(new View.OnClickListener(){

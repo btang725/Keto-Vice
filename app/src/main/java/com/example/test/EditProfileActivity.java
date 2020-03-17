@@ -82,9 +82,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void editCurrentUser(String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(name, age, height, weight, gd, mail, pass);
-        myRef.child(User.CURRENT.email).removeValue();
+        //myRef.child(User.CURRENT.email).removeValue();
         myRef.child(mail).setValue(u);
-        User.CURRENT = u;
+        //User.CURRENT = u;
     }
 }
 

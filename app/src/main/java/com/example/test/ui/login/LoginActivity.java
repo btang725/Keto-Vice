@@ -52,10 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                             String other_pass = ((String) snapshot.child(email).child("password").getValue());
                             if(other_pass.equals(pass))
                             {
-                                startActivity(new Intent(LoginActivity.this, Home.class));
-                                // Call User login activity
+                                Bundle bundle = new Bundle();
+                                bundle.putString("email", email);
+                                Intent intent = new Intent(LoginActivity.this, Home.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
                             }
-
                             else
                                 Toast.makeText(getApplicationContext(), "Unknown email or pass", Toast.LENGTH_LONG).show();
                         }

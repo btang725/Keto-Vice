@@ -1,7 +1,6 @@
 package com.example.test;
 
 public class User {
-    public String userID;
     public String name;
     public String age;
     public String height;
@@ -11,8 +10,7 @@ public class User {
     public String password;
 
 
-    public User(String userID, String name, String age, String height, String weight, String gender, String email, String password){
-        this.userID = userID;
+    public User(String name, String age, String height, String weight, String gender, String email, String password){
         this.name = name;
         this.age = age;
         this.height = height;

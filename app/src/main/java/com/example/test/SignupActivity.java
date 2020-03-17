@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    writeNewUser(id, name, age, height, weight, gd, mail, pass);
+                    writeNewUser(name, age, height, weight, gd, mail, pass);
 
                     //TODO: go to recommendation instead of home page
                     startActivity(new Intent(SignupActivity.this, Home.class));
@@ -85,8 +85,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     //this function does a basic write (creating new user) to firebase db
-    private void writeNewUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
-        User u = new User(userID, name, age, height, weight, gd, mail, pass);
+    private void writeNewUser(String name, String age, String height, String weight, String gd, String mail, String pass){
+        User u = new User(name, age, height, weight, gd, mail, pass);
         myRef.child(mail).setValue(u);
 
         System.out.println("very cool");
