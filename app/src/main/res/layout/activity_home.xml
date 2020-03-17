@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context=".Home"
-    android:background="@color/colorPrimaryDark">
+    tools:context=".Home">
 
 
     <Button
         android:id="@+id/restaurant"
         android:layout_width="175dp"
         android:layout_height="162dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recommend"
         app:layout_constraintTop_toBottomOf="@+id/welcomeMsg"
-        app:layout_constraintVertical_bias="0.509" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/recommend"
@@ -36,7 +36,7 @@
         android:layout_height="162dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="31dp"
         android:layout_marginRight="31dp"
         android:layout_marginBottom="8dp"
@@ -58,6 +58,7 @@
         android:layout_height="162dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="368dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/circle_button"
         android:drawableTop="@drawable/ic_event"
@@ -69,7 +70,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edit_profile"
         app:layout_constraintEnd_toStartOf="@+id/buttonStats"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/edit_profile"
@@ -80,7 +82,7 @@
         android:layout_marginLeft="126dp"
         android:layout_marginEnd="127dp"
         android:layout_marginRight="127dp"
-        android:layout_marginBottom="74dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button"
         android:drawableTop="@drawable/ic_profile"
         android:paddingTop="20dp"
@@ -91,6 +93,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -99,6 +102,7 @@
         android:layout_height="162dp"
         android:layout_marginStart="31dp"
         android:layout_marginLeft="31dp"
+        android:layout_marginTop="368dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="24dp"
@@ -111,18 +115,20 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edit_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/calendar" />
+        app:layout_constraintStart_toEndOf="@+id/calendar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/welcomeMsg"
         android:layout_width="347dp"
         android:layout_height="67dp"
+        android:layout_marginTop="52dp"
         android:gravity="center"
         android:text="Welcome"
         android:textColor="#FFFFFF"
         android:textColorLink="#FFFFFF"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/recommend"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
