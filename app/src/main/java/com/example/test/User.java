@@ -75,8 +75,4 @@ public class User {
         return 0;
     }
 
-    public void loginUser(String email) {
-        // CURRENT = ...
-    }
-
 }
