@@ -22,7 +22,7 @@ public class Home extends AppCompatActivity {
         //Bundle bundle = intent.getExtras();
         //email = bundle.getString("email");
         welcomeMsg = findViewById(R.id.welcomeMsg);
-        welcomeMsg.setText("Welcome " + User.CURRENT.name);
+        welcomeMsg.setText("Welcome " + User.CURRENT.name + "!");
 
         // Restaurant
         findViewById(R.id.restaurant).setOnClickListener(new View.OnClickListener(){
