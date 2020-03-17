@@ -11,6 +11,9 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class CalendarActivity extends AppCompatActivity {
     //Variables
     CalendarView calendarView;
@@ -27,7 +30,10 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         myDate = (TextView) findViewById(R.id.myDate);
         bChckRec = (Button) findViewById(R.id.buttonAddFood);
-        date = "";
+
+        Calendar today = Calendar.getInstance(TimeZone.getDefault());
+        date = String.format("%d/%d/%d", today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.YEAR));
+        myDate.setText(date);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -40,10 +46,6 @@ public class CalendarActivity extends AppCompatActivity {
         bChckRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(date == "") {
-                    Toast.makeText(getApplicationContext(), "Please select a date from the calendar above", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 Bundle bundle = new Bundle();
                 bundle.putString("date", date);
                 Intent intent = new Intent(CalendarActivity.this, DailyActivity.class);
