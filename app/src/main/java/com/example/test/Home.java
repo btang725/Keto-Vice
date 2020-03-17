@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class Home extends AppCompatActivity {
 
@@ -42,11 +43,19 @@ public class Home extends AppCompatActivity {
         });
 
         // Edit Profile
-        // Recommendation
         findViewById(R.id.edit_profile).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 startActivity(new Intent(Home.this, EditProfileActivity.class));
+            }
+        });
+
+        // My Statistics   buttonStats
+        findViewById(R.id.buttonStats).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "I fear nothing is here. Better bust that rear before I get near.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Home.this, StatisticsActivity.class));
             }
         });
     }
