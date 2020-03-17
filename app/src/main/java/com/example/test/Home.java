@@ -18,11 +18,11 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        email = bundle.getString("email");
+        //Intent intent = getIntent();
+        //Bundle bundle = intent.getExtras();
+        //email = bundle.getString("email");
         welcomeMsg = findViewById(R.id.welcomeMsg);
-        welcomeMsg.setText("Welcome " + email);
+        welcomeMsg.setText("Welcome " + User.CURRENT.name);
 
         // Restaurant
         findViewById(R.id.restaurant).setOnClickListener(new View.OnClickListener(){

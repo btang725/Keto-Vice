@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.test.R;
 
 import com.example.test.Home;
+import com.example.test.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,10 +53,20 @@ public class LoginActivity extends AppCompatActivity {
                             String other_pass = ((String) snapshot.child(email).child("password").getValue());
                             if(other_pass.equals(pass))
                             {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("email", email);
+                                User.CURRENT = new User(
+                                        (String) snapshot.child(email).child("name").getValue(),
+                                        (String) snapshot.child(email).child("age").getValue(),
+                                        (String) snapshot.child(email).child("height").getValue(),
+                                        (String) snapshot.child(email).child("weight").getValue(),
+                                        (String) snapshot.child(email).child("gender").getValue(),
+                                        (String) snapshot.child(email).child("email").getValue(),
+                                        (String) snapshot.child(email).child("password").getValue()
+                                );
+
+                                //Bundle bundle = new Bundle();
+                                //bundle.putString("email", email);
                                 Intent intent = new Intent(LoginActivity.this, Home.class);
-                                intent.putExtras(bundle);
+                                //intent.putExtras(bundle);
                                 startActivity(intent);
                             }
                             else
