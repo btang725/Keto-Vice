@@ -17,11 +17,11 @@
         android:gravity="center"
         android:text="My Calendar"
         android:textColor="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:background="@drawable/background_calendar"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="56dp">
@@ -32,46 +32,16 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/textFoodName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="30dp"
-        android:ems="9"
-        android:gravity="center"
-        android:hint="What I ate today"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/textCalories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="0dp"
-        android:ems="9"
-        android:gravity="center"
-        android:hint="Total Calories"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
-        android:id="@+id/buttonCheckRecommendation"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttonAddFood"
+        android:layout_width="192dp"
+        android:layout_height="58dp"
         android:layout_marginLeft="110dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Confirm"
+        android:text="Add Food"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
