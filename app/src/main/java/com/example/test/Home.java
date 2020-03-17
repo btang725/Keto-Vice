@@ -42,7 +42,6 @@ public class Home extends AppCompatActivity {
         });
 
         // Edit Profile
-        // Recommendation
         findViewById(R.id.edit_profile).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-//IMPLEMENT CORRECTLY
 public class EditProfileActivity extends AppCompatActivity {
     EditText ed_name;
     EditText ed_age;
@@ -52,12 +51,11 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String id = myRef.push().getKey();          //Generates random key for database
                 String name = ed_name.getText().toString();
                 String age = ed_age.getText().toString();
                 String height = ed_height.getText().toString();
                 String weight = ed_weight.getText().toString();
-                String mail = ed_mail.getText().toString();
+                String mail = ed_mail.getText().toString().replace('.', ',');
                 String pass = ed_pass.getText().toString();
                 String gd = ed_spinner_s.getSelectedItem().toString();
 
@@ -75,22 +73,18 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    editCurrentUser(id, name, age, height, weight, gd, mail, pass);
-
-                    //TODO: go to recommendation instead of home page
+                    editCurrentUser(name, age, height, weight, gd, mail, pass);
                     startActivity(new Intent(EditProfileActivity.this, Home.class));
                 }
             }
         });
     }
 
-    //FIX THIS SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-    //this function does a basic write (creating new user) to firebase db
-    private void editCurrentUser(String userID, String name, String age, String height, String weight, String gd, String mail, String pass){
-        User u = new User(userID, name, age, height, weight, gd, mail, pass);
+    private void editCurrentUser(String name, String age, String height, String weight, String gd, String mail, String pass){
+        User u = new User(name, age, height, weight, gd, mail, pass);
+        myRef.child(User.CURRENT.email).removeValue();
         myRef.child(mail).setValue(u);
-
-        System.out.println("very cool");
+        User.CURRENT = u;
     }
 }
 
