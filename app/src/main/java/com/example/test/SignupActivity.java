@@ -6,13 +6,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 public class SignupActivity extends AppCompatActivity {
@@ -52,7 +50,6 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String id = myRef.push().getKey();          //Generates random key for database
                 String name = et_name.getText().toString();
                 String age = et_age.getText().toString();
                 String height = et_height.getText().toString();
@@ -76,8 +73,6 @@ public class SignupActivity extends AppCompatActivity {
                 else
                 {
                     writeNewUser(name, age, height, weight, gd, mail, pass);
-
-                    //TODO: go to recommendation instead of home page
                     startActivity(new Intent(SignupActivity.this, Home.class));
                 }
             }
@@ -87,8 +82,7 @@ public class SignupActivity extends AppCompatActivity {
     //this function does a basic write (creating new user) to firebase db
     private void writeNewUser(String name, String age, String height, String weight, String gd, String mail, String pass){
         User u = new User(name, age, height, weight, gd, mail, pass);
+        User.CURRENT = u;
         myRef.child(mail).setValue(u);
-
-        System.out.println("very cool");
     }
 }
