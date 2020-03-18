@@ -8,11 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DailyActivity extends AppCompatActivity {
     //Variables
@@ -23,6 +31,9 @@ public class DailyActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private DatabaseReference myRef;    //Testing a reference for Firebase
+    private FirebaseDatabase fbd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +41,9 @@ public class DailyActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+
+        fbd = FirebaseDatabase.getInstance();
+        myRef = fbd.getReference();
 
         //Recycler View Items
         final ArrayList<FoodItem> foodHistory = new ArrayList<>();
@@ -75,5 +89,62 @@ public class DailyActivity extends AppCompatActivity {
         fats.setText(       "Fats:        0 / " + User.CURRENT.getNeededFats());
         carbs.setText(      "Carbs:       0 / " + User.CURRENT.getNeededCarbs());
         proteins.setText(   "Proteins:    0 / " + User.CURRENT.getNeededProtein());
+
+        // Get initial needed calorie and macro nutrients
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                long eaten_cals = 0;
+                long eaten_fats = 0;
+                long eaten_carbs = 0;
+                long eaten_proteins = 0;
+
+                String select_date = date.getText().toString();
+                String history_child = "Users/" + User.CURRENT.email + "/history/" + select_date.replace('/', '-');
+
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                System.out.println(history_child);
+                System.out.println(snapshot.hasChild(history_child));
+                if(snapshot.hasChild(history_child)) {
+                    Iterator<DataSnapshot> data_iter = snapshot.child(history_child).getChildren().iterator();
+                    DataSnapshot data;
+
+                    while (data_iter.hasNext()) {
+                        System.out.println("HREEEEEEEEEee");
+                        data = data_iter.next();
+                        String key = data.getKey();
+
+                        eaten_cals += (long) snapshot.child(history_child).child(key).child("cal").getValue();
+                        eaten_carbs += (long) snapshot.child(history_child).child(key).child("carb").getValue();
+                        eaten_fats += (long) snapshot.child(history_child).child(key).child("fat").getValue();
+                        eaten_proteins += (long) snapshot.child(history_child).child(key).child("protein").getValue();
+                    }
+                }
+
+                calories.setText(   "Calories:    " + eaten_cals + " / " + User.CURRENT.getNeededCalories());
+                fats.setText(       "Fats:        " + eaten_fats + " / " + User.CURRENT.getNeededFats());
+                carbs.setText(      "Carbs:       " + eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
+                proteins.setText(   "Proteins:    " + eaten_proteins + " / " + User.CURRENT.getNeededProtein());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        System.out.println("BUTTON WORKS");
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+        });
     }
 }
