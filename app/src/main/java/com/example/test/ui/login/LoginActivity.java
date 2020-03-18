@@ -63,10 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                                         (String) snapshot.child(email).child("password").getValue()
                                 );
 
-                                //Bundle bundle = new Bundle();
-                                //bundle.putString("email", email);
                                 Intent intent = new Intent(LoginActivity.this, Home.class);
-                                //intent.putExtras(bundle);
                                 startActivity(intent);
                             }
                             else

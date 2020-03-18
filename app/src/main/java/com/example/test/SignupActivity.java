@@ -95,6 +95,5 @@ public class SignupActivity extends AppCompatActivity {
         temp.put("password", pass);
 
         myRef.child(mail).setValue(temp);
-
     }
 }

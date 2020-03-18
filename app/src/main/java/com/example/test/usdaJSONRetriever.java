@@ -27,19 +27,15 @@ public class usdaJSONRetriever extends AppCompatActivity {
         usdaJson = "";
     }
     //https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&location=Denver+CO
-    //Methods
+
 
     //Gets json from query.
     private void getJSON(String query) {
         usdaJson = "https://api.nal.usda.gov/fdc/v1/search?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&generalSearchInput=keto"; //Testable String
-        usdaJson = "https://api.fda.gov/drug/event.json?limit=1";
         //query = "Cheddar%20Cheese"; //example
         query.replace(" ", "%20");  //In case of spaces for correct search results.
         //usdaJson = "https://api.nal.usda.gov/fdc/v1/search?"+APIKey+"&generalSearchInput="+query;
         new JsonTask().execute(usdaJson); //Will put JSON text into txtJson variable
-
-        System.out.println(txtJson);     //Just testing, erase later...
-        System.out.println("GAY");
     }
 
     public String getInformation(String query) {
@@ -60,8 +56,6 @@ public class usdaJSONRetriever extends AppCompatActivity {
         }
 
         protected String doInBackground(String... params) {
-
-
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 
@@ -69,7 +63,6 @@ public class usdaJSONRetriever extends AppCompatActivity {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-
 
                 InputStream stream = connection.getInputStream();
 
@@ -80,8 +73,6 @@ public class usdaJSONRetriever extends AppCompatActivity {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
                 }
 
                 return buffer.toString();

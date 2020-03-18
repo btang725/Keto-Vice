@@ -1,122 +1,111 @@
 package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.Snapshot;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.TimeZone;
+
 
 public class RecommendationActivity extends AppCompatActivity {
     Button buttonDummy;
-    usdaJSONRetriever usda;
-    ProgressDialog pd;
-    String txtJson = "";
+    private DatabaseReference myRef;    //Testing a reference for Firebase
+    private FirebaseDatabase fbd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation);
-
-        //usda = new usdaJSONRetriever();
-
         buttonDummy = (Button) findViewById(R.id.buttonDummy);
-        Toast.makeText(getApplicationContext(), "I fear nothing is here. Better bust that rear before I get near.", Toast.LENGTH_SHORT).show();
+
+        final TextView foodName = findViewById(R.id.foodName);
+        foodName.setText("");
+
+        fbd = FirebaseDatabase.getInstance();
+        myRef = fbd.getReference(); //Testing Firebase
+
+        Calendar today = Calendar.getInstance(TimeZone.getDefault());
+        final String date = String.format("%d-%d-%d", today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.YEAR));
 
         buttonDummy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "You clicked a button, congratulations!", Toast.LENGTH_SHORT).show();
-//                usda.getInformation("My query");
-//                System.out.println("Gay");
-                new JsonTask().execute("https://api.nal.usda.gov/fdc/v1/search?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu&generalSearchInput=keto"); //YOUR URL ADDRESS HERE!!!
-                System.out.println("Hey");
-                System.out.println(txtJson);
-                System.out.println("Worked?");
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        String history_child = "Users/" + User.CURRENT.email + "/history/" + date;
+                        int currentCalories = User.CURRENT.getNeededCalories();
+
+                        if(snapshot.hasChild(history_child))
+                        {
+                            Iterator<DataSnapshot> data_iter = snapshot.child(history_child).getChildren().iterator();
+                            DataSnapshot data;
+                            int i = 0;
+
+                            while(data_iter.hasNext())
+                            {
+                                data = data_iter.next();
+                                String key = data.getKey();
+
+                                currentCalories -= (Long) snapshot.child(history_child).child(key).child("cal").getValue();
+                            }
+                        }
+                        Iterator<DataSnapshot> rec_iter = snapshot.child("Recommendations").getChildren().iterator();
+                        DataSnapshot foods;
+
+                        String bestMatchID = null;
+                        int minCals = 0;
+
+                        while(rec_iter.hasNext())
+                        {
+                            foods = rec_iter.next();
+                            String key = foods.getKey();
+
+                            if(bestMatchID != null)
+                            {
+                                long foundCals = (Long) snapshot.child("Recommendations").child(key).child("cal").getValue();
+                                int temp = Math.abs(currentCalories - ((int) foundCals));
+
+                                if(temp < minCals)
+                                {
+                                    minCals = temp;
+                                    bestMatchID = key;
+                                }
+                            }
+                            else
+                            {
+                                long foundCals = (Long) snapshot.child("Recommendations").child(key).child("cal").getValue();
+                                bestMatchID = key;
+                                minCals = Math.abs(currentCalories - ((int) foundCals));;
+                            }
+                        }
+
+                        System.out.println((String) snapshot.child("Recommendations").child(bestMatchID).child("name").getValue());
+                        System.out.println(String.valueOf(minCals));
+
+                        foodName.setText(
+                                String.format("%s",
+                                        (String) snapshot.child("Recommendations").child(bestMatchID).child("name").getValue()
+                                        )
+                        );
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
         });
     }
-    //Just copy pasted everything below for now...
-    private class JsonTask extends AsyncTask<String, String, String> {
-
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            pd = new ProgressDialog(RecommendationActivity.this);
-            pd.setMessage("Please wait");
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        protected String doInBackground(String... params) {
-
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line+"\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
-                }
-
-                return buffer.toString();
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if (pd.isShowing()){
-                pd.dismiss();
-            }
-            txtJson=result;
-        }
-    }
-
 }

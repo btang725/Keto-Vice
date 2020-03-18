@@ -30,7 +30,6 @@ public class DailyActivity extends AppCompatActivity {
         fats = findViewById(R.id.textFats);
         carbs = findViewById(R.id.textCarbs);
         proteins = findViewById(R.id.textProteins);
-        food = findViewById(R.id.textSelection);
 
         //Setting Text
         date.setText(bundle.getString("date"));
@@ -39,6 +38,5 @@ public class DailyActivity extends AppCompatActivity {
         fats.setText(       "Fats:        0 / " + User.CURRENT.getNeededFats());
         carbs.setText(      "Carbs:       0 / " + User.CURRENT.getNeededCarbs());
         proteins.setText(   "Proteins:    0 / " + User.CURRENT.getNeededProtein());
-        food.setText("");
     }
 }
