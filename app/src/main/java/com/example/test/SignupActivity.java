@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 
+import java.util.HashMap;
+
 public class SignupActivity extends AppCompatActivity {
     EditText et_name;
     EditText et_age;
@@ -113,7 +115,7 @@ public class SignupActivity extends AppCompatActivity {
     private void writeNewUser(String name, String age, String height, String weight, String gd, String mail, String pass, String goal, String exer){
         User u = new User(name, age, height, weight, gd, mail, pass, goal, exer);
         User.CURRENT = u;
-        Hashmap<String, String> temp = new Hashmap<>();
+        HashMap <String, String> temp = new HashMap<>();
         temp.put("name", name);
         temp.put("age", age);
         temp.put("height", height);
