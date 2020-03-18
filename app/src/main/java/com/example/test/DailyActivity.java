@@ -34,6 +34,90 @@ public class DailyActivity extends AppCompatActivity {
     private DatabaseReference myRef;    //Testing a reference for Firebase
     private FirebaseDatabase fbd;
 
+    private void updateDisplay(DataSnapshot snapshot) {
+        final ArrayList<FoodItem> foodHistory = new ArrayList<>();
+
+        String food_name = "";
+        long temp_cals = 0;
+        long temp_fats = 0;
+        long temp_carbs = 0;
+        long temp_proteins = 0;
+
+        long eaten_cals = 0;
+        long eaten_fats = 0;
+        long eaten_carbs = 0;
+        long eaten_proteins = 0;
+
+        String select_date = date.getText().toString();
+        final String history_child = "Users/" + User.CURRENT.email + "/history/" + select_date.replace('/', '-');
+
+        if(snapshot.hasChild(history_child)) {
+            Iterator<DataSnapshot> data_iter = snapshot.child(history_child).getChildren().iterator();
+            DataSnapshot data;
+
+            while (data_iter.hasNext()) {
+                data = data_iter.next();
+                String key = data.getKey();
+
+                food_name = (String) snapshot.child(history_child).child(key).child("name").getValue();
+                temp_cals += (long) snapshot.child(history_child).child(key).child("cal").getValue();
+                temp_carbs += (long) snapshot.child(history_child).child(key).child("carb").getValue();
+                temp_fats += (long) snapshot.child(history_child).child(key).child("fat").getValue();
+                temp_proteins += (long) snapshot.child(history_child).child(key).child("protein").getValue();
+
+                eaten_cals += temp_cals;
+                eaten_fats += temp_fats;
+                eaten_carbs += temp_carbs;
+                eaten_proteins += temp_proteins;
+
+                foodHistory.add(new FoodItem(
+                        food_name,
+                        String.valueOf(temp_cals),
+                        String.valueOf(temp_fats),
+                        String.valueOf(temp_carbs),
+                        String.valueOf(temp_proteins),
+                        key)
+                );
+
+            }
+        }
+
+        calories.setText(eaten_cals + " / " + User.CURRENT.getNeededCalories());
+        fats.setText(eaten_fats + " / " + User.CURRENT.getNeededFats());
+        carbs.setText(eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
+        proteins.setText(eaten_proteins + " / " + User.CURRENT.getNeededProtein());
+
+        mAdapter = new HistoryAdapter(foodHistory);
+        mRecyclerView.setAdapter(mAdapter);
+
+        final long total_cals = eaten_cals;
+        final long total_fats = eaten_fats;
+        final long total_carbs = eaten_carbs;
+        final long total_proteins = eaten_proteins;
+
+        //For removing via Swipe
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder target, int direction) {
+                int position = target.getAdapterPosition();
+                FoodItem item = foodHistory.get(position);
+                myRef.child(history_child).child(item.getId()).removeValue();
+                calories.setText((total_cals - Integer.valueOf(item.getCals())) + " / " + User.CURRENT.getNeededCalories());
+                fats.setText((total_fats - Integer.valueOf(item.getFat())) + " / " + User.CURRENT.getNeededFats());
+                carbs.setText((total_carbs - Integer.valueOf(item.getCarbs())) + " / " + User.CURRENT.getNeededCarbs());
+                proteins.setText((total_proteins - Integer.valueOf(item.getProtein())) + " / " + User.CURRENT.getNeededProtein());
+                foodHistory.remove(position);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        helper.attachToRecyclerView(mRecyclerView);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,75 +159,7 @@ public class DailyActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                final ArrayList<FoodItem> foodHistory = new ArrayList<>();
-
-                String food_name = "";
-                long temp_cals = 0;
-                long temp_fats = 0;
-                long temp_carbs = 0;
-                long temp_proteins = 0;
-
-                long eaten_cals = 0;
-                long eaten_fats = 0;
-                long eaten_carbs = 0;
-                long eaten_proteins = 0;
-
-                String select_date = date.getText().toString();
-                String history_child = "Users/" + User.CURRENT.email + "/history/" + select_date.replace('/', '-');
-
-                if(snapshot.hasChild(history_child)) {
-                    Iterator<DataSnapshot> data_iter = snapshot.child(history_child).getChildren().iterator();
-                    DataSnapshot data;
-
-                    while (data_iter.hasNext()) {
-                        data = data_iter.next();
-                        String key = data.getKey();
-
-                        food_name = (String) snapshot.child(history_child).child(key).child("name").getValue();
-                        temp_cals += (long) snapshot.child(history_child).child(key).child("cal").getValue();
-                        temp_carbs += (long) snapshot.child(history_child).child(key).child("carb").getValue();
-                        temp_fats += (long) snapshot.child(history_child).child(key).child("fat").getValue();
-                        temp_proteins += (long) snapshot.child(history_child).child(key).child("protein").getValue();
-
-                        eaten_cals += temp_cals;
-                        eaten_fats += temp_fats;
-                        eaten_carbs += temp_carbs;
-                        eaten_proteins += temp_proteins;
-
-                        foodHistory.add(new FoodItem(
-                                food_name,
-                                String.valueOf(temp_cals),
-                                String.valueOf(temp_fats),
-                                String.valueOf(temp_carbs),
-                                String.valueOf(temp_proteins))
-                        );
-
-                    }
-                }
-
-                calories.setText(   "Calories:    " + eaten_cals + " / " + User.CURRENT.getNeededCalories());
-                fats.setText(       "Fats:        " + eaten_fats + " / " + User.CURRENT.getNeededFats());
-                carbs.setText(      "Carbs:       " + eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
-                proteins.setText(   "Proteins:    " + eaten_proteins + " / " + User.CURRENT.getNeededProtein());
-
-                mAdapter = new HistoryAdapter(foodHistory);
-                mRecyclerView.setAdapter(mAdapter);
-
-                //For removing via Swipe
-                ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder target, int direction) {
-                        int position = target.getAdapterPosition();
-                        foodHistory.remove(position);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
-                helper.attachToRecyclerView(mRecyclerView);
+                updateDisplay(snapshot);
             }
 
             @Override
