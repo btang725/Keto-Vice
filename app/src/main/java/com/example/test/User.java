@@ -29,8 +29,8 @@ public class User {
     public User(String name, String age, String height, String height2, String weight, String gender, String email, String password, String goal, String exer){
         this.name = name;
         this.age = age;
-        this.height = height;
-        this.height2 = height2;
+        this.height = height; // feet
+        this.height2 = height2; // inches
         this.weight = weight;
         this.gender = gender;
         this.email = email;
@@ -47,9 +47,9 @@ public class User {
     {
         int additional = 0;
         double multiplier = 1.2;
-        int height = 72;
-        int weight = 160;
-        int age = 21;
+        int height = (Integer.valueOf(this.height) * 12) + Integer.valueOf(this.height2);
+        int weight = Integer.valueOf(this.weight);
+        int age = Integer.valueOf(this.age);
 
         if (activityLevel == ActivityLevel.LIGHT)
             multiplier = 1.4;
@@ -64,7 +64,7 @@ public class User {
         // Adult male: 66 + (6.3 x body weight in lbs.) + (12.9 x height in inches) - (6.8 x age in years) = BMR
         // Adult female: 655 + (4.3 x weight in lbs.) + (4.7 x height in inches) - (4.7 x age in years) = BMR
 
-        if(gender == "Male")
+        if(this.gender == "Male")
         {
             return (int)((66 + (6.3 * weight) + (12.9 * height) - (6.8 * age)) * multiplier) + additional;
         }
@@ -89,9 +89,7 @@ public class User {
 
     public int getNeededProtein()
     {
-        int weight = 160;
-
         // Protein intake in 0.8 grams per pound of body weight.
-        return (int)(0.8 * weight);
+        return (int)(0.8 * Integer.valueOf(this.weight));
     }
 }
