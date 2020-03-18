@@ -85,10 +85,10 @@ public class DailyActivity extends AppCompatActivity {
         //Setting Text
         date.setText(bundle.getString("date"));
 
-        calories.setText(   "Calories:    0 / " + User.CURRENT.getNeededCalories());
-        fats.setText(       "Fats:        0 / " + User.CURRENT.getNeededFats());
-        carbs.setText(      "Carbs:       0 / " + User.CURRENT.getNeededCarbs());
-        proteins.setText(   "Proteins:    0 / " + User.CURRENT.getNeededProtein());
+        calories.setText(   "0 / " + User.CURRENT.getNeededCalories());
+        fats.setText(       "0 / " + User.CURRENT.getNeededFats());
+        carbs.setText(      "0 / " + User.CURRENT.getNeededCarbs());
+        proteins.setText(   "0 / " + User.CURRENT.getNeededProtein());
 
         // Get initial needed calorie and macro nutrients
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,10 +121,10 @@ public class DailyActivity extends AppCompatActivity {
                     }
                 }
 
-                calories.setText(   "Calories:    " + eaten_cals + " / " + User.CURRENT.getNeededCalories());
-                fats.setText(       "Fats:        " + eaten_fats + " / " + User.CURRENT.getNeededFats());
-                carbs.setText(      "Carbs:       " + eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
-                proteins.setText(   "Proteins:    " + eaten_proteins + " / " + User.CURRENT.getNeededProtein());
+                calories.setText(   eaten_cals + " / " + User.CURRENT.getNeededCalories());
+                fats.setText(       eaten_fats + " / " + User.CURRENT.getNeededFats());
+                carbs.setText(      eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
+                proteins.setText(   eaten_proteins + " / " + User.CURRENT.getNeededProtein());
             }
 
             @Override
