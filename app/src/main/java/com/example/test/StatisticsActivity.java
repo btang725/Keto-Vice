@@ -21,8 +21,8 @@ public class StatisticsActivity extends AppCompatActivity {
         weight = findViewById(R.id.textMyWeight);
         height = findViewById(R.id.textMyHeight);
         bmi = findViewById(R.id.textMyBMI);
-        ftHeight = Integer.parseInt(User.CURRENT.height)/100;
-        inHeight = Integer.parseInt(User.CURRENT.height)%(ftHeight*100);
+        ftHeight = Integer.parseInt(User.CURRENT.height);
+        inHeight = Integer.parseInt(User.CURRENT.height2);
         iWeight = Integer.parseInt(User.CURRENT.weight);
         inchesH = ftHeight*12 + inHeight;
 
