@@ -20,9 +20,11 @@ import java.util.TimeZone;
 
 
 public class RecommendationActivity extends AppCompatActivity {
+    //Variables
     Button buttonDummy;
     private DatabaseReference myRef;    //Testing a reference for Firebase
     private FirebaseDatabase fbd;
+    TextView foodName, calories, carbs, fat, protein;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,15 @@ public class RecommendationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recommendation);
         buttonDummy = (Button) findViewById(R.id.buttonDummy);
 
-        final TextView foodName = findViewById(R.id.foodName);
-        foodName.setText("");
+        //Declarations
+        foodName = findViewById(R.id.foodName);
+        calories = findViewById(R.id.rCals);
+        carbs = findViewById(R.id.rCarbs);
+        fat = findViewById(R.id.rFat);
+        protein = findViewById(R.id.rProtein);
+
+        //Setting Text
+        foodName.setText("Click Below!");
 
         fbd = FirebaseDatabase.getInstance();
         myRef = fbd.getReference(); //Testing Firebase
