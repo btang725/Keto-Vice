@@ -7,24 +7,13 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".DailyActivity">
 
-    <ImageView
-        android:id="@+id/imageDailyFood"
-        android:layout_width="200dp"
-        android:layout_height="329dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582"
-        app:srcCompat="@drawable/restaurant" />
-
     <TextView
         android:id="@+id/textFats"
         android:layout_width="338dp"
         android:layout_height="28dp"
         android:layout_marginTop="168dp"
         android:layout_marginBottom="535dp"
+        android:fontFamily="monospace"
         android:text="Fats:         0000"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -41,6 +30,7 @@
         android:layout_height="36dp"
         android:layout_marginTop="264dp"
         android:layout_marginBottom="431dp"
+        android:fontFamily="monospace"
         android:text="Proteins:  0000"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -52,25 +42,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textSelection"
-        android:layout_width="329dp"
-        android:layout_height="72dp"
-        android:gravity="center"
-        android:text="Search For Your\nFood Above"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.451"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="615dp" />
-
-    <TextView
         android:id="@+id/textCarbs"
         android:layout_width="336dp"
         android:layout_height="37dp"
         android:layout_marginTop="212dp"
         android:layout_marginBottom="482dp"
+        android:fontFamily="monospace"
         android:text="Carbs:      0000"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -93,8 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/searchView"
@@ -105,8 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </SearchView>
 
@@ -116,6 +91,7 @@
         android:layout_height="37dp"
         android:layout_marginTop="120dp"
         android:layout_marginBottom="574dp"
+        android:fontFamily="monospace"
         android:text="Calories:  0000"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -142,5 +118,22 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/foodHistory"
+        android:layout_width="409dp"
+        android:layout_height="333dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:id="@+id/foodHistoryVertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
