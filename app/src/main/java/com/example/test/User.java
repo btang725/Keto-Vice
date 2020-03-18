@@ -1,15 +1,6 @@
 package com.example.test;
 
 public class User {
-
-    public enum WeightPreference {
-        LOSE, GAIN, MAINTAIN
-    }
-
-    public enum ActivityLevel {
-        NONE, LIGHT, HEAVY
-    }
-
     public String name;
     public String age;
     public String height;
@@ -20,8 +11,6 @@ public class User {
     public String password;
     public String exer; //string for acitivity level
     public String goal; //string for weight preference
-    public WeightPreference weightPreference;
-    public ActivityLevel activityLevel;
 
     // Use User.CURRENT to get any needed fields
     public static User CURRENT;
@@ -38,9 +27,6 @@ public class User {
 
         this.exer = exer;
         this.goal = goal;
-
-        this.weightPreference = WeightPreference.MAINTAIN; // Change this
-        this.activityLevel = ActivityLevel.NONE;
     }
 
     public int getNeededCalories()
@@ -51,13 +37,13 @@ public class User {
         int weight = Integer.valueOf(this.weight);
         int age = Integer.valueOf(this.age);
 
-        if (activityLevel == ActivityLevel.LIGHT)
+        if (this.exer == "Moderate")
             multiplier = 1.4;
-        if (activityLevel == ActivityLevel.HEAVY)
+        if (this.exer == "Active")
             multiplier = 1.7;
-        if (weightPreference == WeightPreference.LOSE)
+        if (this.goal == "Lose Weight")
             additional -= 500;
-        if (weightPreference == WeightPreference.GAIN)
+        if (this.goal == "Gain Weight")
             additional += 500;
 
         // BMR formula
