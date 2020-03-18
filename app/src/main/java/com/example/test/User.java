@@ -2,14 +2,6 @@ package com.example.test;
 
 public class User {
 
-    public enum WeightPreference {
-        LOSE, GAIN, MAINTAIN
-    }
-
-    public enum ActivityLevel {
-        NONE, LIGHT, HEAVY
-    }
-
     public String name;
     public String age;
     public String height;
@@ -17,13 +9,14 @@ public class User {
     public String gender;
     public String email;
     public String password;
-    public WeightPreference weightPreference;
-    public ActivityLevel activityLevel;
+    public String goal;
+    public String exercise;
 
     // Use User.CURRENT to get any needed fields
     public static User CURRENT;
 
-    public User(String name, String age, String height, String weight, String gender, String email, String password){
+    public User(String name, String age, String height, String weight, String gender, String email,
+                String password, String goal, String exercise){
         this.name = name;
         this.age = age;
         this.height = height;
@@ -31,25 +24,28 @@ public class User {
         this.gender = gender;
         this.email = email;
         this.password = password;
-
-        this.weightPreference = WeightPreference.MAINTAIN; // Change this
-        this.activityLevel = ActivityLevel.NONE;
+        this.goal = goal;
+        this.exercise = exercise;
     }
 
-    public int getNeededCalories()
+
+    //TODO: Not Done
+    public int getNeededCalories(String activityLevel, String weightPreference)
     {
         int additional = 0;
         int height = 0;
         int weight = 0;
         int age = 0;
 
-        if (activityLevel == ActivityLevel.LIGHT)
+        if (activityLevel == "Sedentary")
+            additional += 25;
+        if (activityLevel == "Moderate")
             additional += 50;
-        if (activityLevel == ActivityLevel.HEAVY)
+        if (activityLevel == "Active")
             additional += 150;
-        if (weightPreference == WeightPreference.LOSE)
+        if (weightPreference == "")
             additional -= 300;
-        if (weightPreference == WeightPreference.GAIN)
+        if (weightPreference == "")
             additional += 300;
 
         // BMR formula
