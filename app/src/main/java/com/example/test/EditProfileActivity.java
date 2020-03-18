@@ -83,7 +83,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void editCurrentUser(String name, String age, String height, String weight, String gd, String mail, String pass){
-        User u = new User(name, age, height, weight, gd, mail, pass);
+        User u = new User(name, age, height, weight, gd, mail, pass, "", ""); // TODO FIX THIS
         myRef.child(User.CURRENT.email).removeValue();
         HashMap<String, String> temp = new HashMap<>();
         

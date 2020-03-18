@@ -53,14 +53,16 @@ public class LoginActivity extends AppCompatActivity {
                             String other_pass = ((String) snapshot.child(email).child("password").getValue());
                             if(other_pass.equals(pass))
                             {
-                                User.CURRENT = new User(
+                                User.CURRENT = new User( // TODO FIX THIS
                                         (String) snapshot.child(email).child("name").getValue(),
                                         (String) snapshot.child(email).child("age").getValue(),
                                         (String) snapshot.child(email).child("height").getValue(),
                                         (String) snapshot.child(email).child("weight").getValue(),
                                         (String) snapshot.child(email).child("gender").getValue(),
                                         (String) snapshot.child(email).child("email").getValue(),
-                                        (String) snapshot.child(email).child("password").getValue()
+                                        (String) snapshot.child(email).child("password").getValue(),
+                                        "",
+                                        ""
                                 );
 
                                 Intent intent = new Intent(LoginActivity.this, Home.class);
