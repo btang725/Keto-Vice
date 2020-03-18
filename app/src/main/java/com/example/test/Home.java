@@ -63,7 +63,6 @@ public class Home extends AppCompatActivity {
         findViewById(R.id.buttonStats).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(getApplicationContext(), "I fear nothing is here. Better bust that rear before I get near.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Home.this, StatisticsActivity.class));
             }
         });
