@@ -92,6 +92,7 @@ public class SignupActivity extends AppCompatActivity {
                     name.length() == 0
                     || age.length() == 0
                     || height.length() == 0
+                    || height2.length() == 0
                     || weight.length() == 0
                     || mail.length() == 0
                 )
