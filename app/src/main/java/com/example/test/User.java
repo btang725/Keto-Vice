@@ -39,52 +39,40 @@ public class User {
     public int getNeededCalories()
     {
         int additional = 0;
-        double multiplier = 1.2;
-
-        int height = 72;
-        int weight = 160;
-        int age = 21;
+        int height = 0;
+        int weight = 0;
+        int age = 0;
 
         if (activityLevel == ActivityLevel.LIGHT)
-            multiplier = 1.4;
+            additional += 50;
         if (activityLevel == ActivityLevel.HEAVY)
-            multiplier = 1.7;
+            additional += 150;
         if (weightPreference == WeightPreference.LOSE)
-            additional -= 500;
+            additional -= 300;
         if (weightPreference == WeightPreference.GAIN)
-            additional += 500;
+            additional += 300;
 
         // BMR formula
         // Adult male: 66 + (6.3 x body weight in lbs.) + (12.9 x height in inches) - (6.8 x age in years) = BMR
         // Adult female: 655 + (4.3 x weight in lbs.) + (4.7 x height in inches) - (4.7 x age in years) = BMR
 
-        if(gender == "Male")
-        {
-            return (int)((66 + (6.3 * weight) + (12.9 * height) - (6.8 * age)) * multiplier) + additional;
-        }
-        else
-        {
-            return (int)((655 + (4.3 * weight) + (4.7 * height) - (4.7 * age)) * multiplier) + additional;
-        }
+
+
+        return 0;
     }
 
     public int getNeededFats()
     {
-        // Fat intake in grams is 30% of calories divided by 9.
-        return (int)((getNeededCalories() * 0.3) / 9);
+        return 0;
     }
 
     public int getNeededCarbs()
     {
-        // Limit to 20 grams per day
-        return 20;
+        return 0;
     }
 
     public int getNeededProtein()
     {
-        int weight = 160;
-
-        // Protein intake in 0.8 grams per pound of body weight.
-        return (int)(0.8 * weight);
+        return 0;
     }
 }
