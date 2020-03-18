@@ -27,18 +27,18 @@ public class DailyActivity extends AppCompatActivity {
         foodSearch = findViewById(R.id.searchView); //Search View to work with...
         date = findViewById(R.id.textCurrentDay);
         calories = findViewById(R.id.textCalories);
-        fats = findViewById(R.id.textCalories);
-        carbs = findViewById(R.id.textCalories);
-        proteins = findViewById(R.id.textCalories);
+        fats = findViewById(R.id.textFats);
+        carbs = findViewById(R.id.textCarbs);
+        proteins = findViewById(R.id.textProteins);
         food = findViewById(R.id.textSelection);
 
         //Setting Text
         date.setText(bundle.getString("date"));
 
-        /*calories.setText("Calories:  0000");
-        fats.setText("Fats:         0000");
-        carbs.setText("Carbs:      0000");
-        proteins.setText("Proteins:  0000");
-        food.setText("");*/
+        calories.setText(   "Calories:    0 / " + User.CURRENT.getNeededCalories());
+        fats.setText(       "Fats:        0 / " + User.CURRENT.getNeededFats());
+        carbs.setText(      "Carbs:       0 / " + User.CURRENT.getNeededCarbs());
+        proteins.setText(   "Proteins:    0 / " + User.CURRENT.getNeededProtein());
+        food.setText("");
     }
 }
