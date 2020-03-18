@@ -46,32 +46,13 @@ public class DailyActivity extends AppCompatActivity {
         myRef = fbd.getReference();
 
         //Recycler View Items
-        final ArrayList<FoodItem> foodHistory = new ArrayList<>();
-        foodHistory.add(new FoodItem("Bananas", "69","fat", "carbs", "protein"));         //TEST
-        foodHistory.add(new FoodItem("Rocks", "1337","fat", "carbs", "protein"));         //TEST
-        foodHistory.add(new FoodItem("Choccy Milk", "420", "fat", "carbs", "protein"));    //TEST
+        final ArrayList<FoodItem> foodHistory = new ArrayList<>();//TEST
         mRecyclerView = findViewById(R.id.foodHistoryVertical);
         mRecyclerView.setHasFixedSize(true);    //Improves Performance
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new HistoryAdapter(foodHistory);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        //For removing via Swipe
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder target, int direction) {
-                int position = target.getAdapterPosition();
-                foodHistory.remove(position);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-        helper.attachToRecyclerView(mRecyclerView);
 
         //Declarations
         add = findViewById(R.id.buttonAdd);
@@ -94,6 +75,14 @@ public class DailyActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                final ArrayList<FoodItem> foodHistory = new ArrayList<>();
+
+                String food_name = "";
+                long temp_cals = 0;
+                long temp_fats = 0;
+                long temp_carbs = 0;
+                long temp_proteins = 0;
+
                 long eaten_cals = 0;
                 long eaten_fats = 0;
                 long eaten_carbs = 0;
@@ -102,22 +91,33 @@ public class DailyActivity extends AppCompatActivity {
                 String select_date = date.getText().toString();
                 String history_child = "Users/" + User.CURRENT.email + "/history/" + select_date.replace('/', '-');
 
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                System.out.println(history_child);
-                System.out.println(snapshot.hasChild(history_child));
                 if(snapshot.hasChild(history_child)) {
                     Iterator<DataSnapshot> data_iter = snapshot.child(history_child).getChildren().iterator();
                     DataSnapshot data;
 
                     while (data_iter.hasNext()) {
-                        System.out.println("HREEEEEEEEEee");
                         data = data_iter.next();
                         String key = data.getKey();
 
-                        eaten_cals += (long) snapshot.child(history_child).child(key).child("cal").getValue();
-                        eaten_carbs += (long) snapshot.child(history_child).child(key).child("carb").getValue();
-                        eaten_fats += (long) snapshot.child(history_child).child(key).child("fat").getValue();
-                        eaten_proteins += (long) snapshot.child(history_child).child(key).child("protein").getValue();
+                        food_name = (String) snapshot.child(history_child).child(key).child("name").getValue();
+                        temp_cals += (long) snapshot.child(history_child).child(key).child("cal").getValue();
+                        temp_carbs += (long) snapshot.child(history_child).child(key).child("carb").getValue();
+                        temp_fats += (long) snapshot.child(history_child).child(key).child("fat").getValue();
+                        temp_proteins += (long) snapshot.child(history_child).child(key).child("protein").getValue();
+
+                        eaten_cals += temp_cals;
+                        eaten_fats += temp_fats;
+                        eaten_carbs += temp_carbs;
+                        eaten_proteins += temp_proteins;
+
+                        foodHistory.add(new FoodItem(
+                                food_name,
+                                String.valueOf(temp_cals),
+                                String.valueOf(temp_fats),
+                                String.valueOf(temp_carbs),
+                                String.valueOf(temp_proteins))
+                        );
+
                     }
                 }
 
@@ -125,6 +125,25 @@ public class DailyActivity extends AppCompatActivity {
                 fats.setText(       "Fats:        " + eaten_fats + " / " + User.CURRENT.getNeededFats());
                 carbs.setText(      "Carbs:       " + eaten_carbs + " / " + User.CURRENT.getNeededCarbs());
                 proteins.setText(   "Proteins:    " + eaten_proteins + " / " + User.CURRENT.getNeededProtein());
+
+                mAdapter = new HistoryAdapter(foodHistory);
+                mRecyclerView.setAdapter(mAdapter);
+
+                //For removing via Swipe
+                ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder target, int direction) {
+                        int position = target.getAdapterPosition();
+                        foodHistory.remove(position);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                helper.attachToRecyclerView(mRecyclerView);
             }
 
             @Override
