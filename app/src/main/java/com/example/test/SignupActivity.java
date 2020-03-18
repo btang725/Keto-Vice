@@ -19,6 +19,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText et_name;
     EditText et_age;
     EditText et_height;
+    EditText et_height2;
     EditText et_weight;
     EditText et_mail;
     EditText et_pass;
@@ -28,7 +29,6 @@ public class SignupActivity extends AppCompatActivity {
     String[] gender = {"Male", "Female"};
     ArrayAdapter<String>arrayAdapter;
 
-    //TODO: COPY HERE ARMANDO
     Spinner spinner_g;
     String[] goals = {"Lose Weight", "Maintain Weight", "Gain Weight"};
     ArrayAdapter<String> goalAdapter;
@@ -36,8 +36,6 @@ public class SignupActivity extends AppCompatActivity {
     Spinner spinner_e;
     String[] exer = {"Sedentary", "Moderate", "Active"};
     ArrayAdapter<String> exerAdapter;
-    //TODO: END COPY HERE ARMANDO
-
 
     //Database
     private DatabaseReference myRef;    //Testing a reference for Firebase
@@ -51,6 +49,7 @@ public class SignupActivity extends AppCompatActivity {
         et_name = (EditText)findViewById(R.id.firstLast);
         et_age = (EditText)findViewById(R.id.age);
         et_height = (EditText)findViewById(R.id.height);
+        et_height2 = (EditText)findViewById(R.id.height2);
         et_weight = (EditText)findViewById(R.id.weight);
         et_mail = (EditText)findViewById(R.id.email);
         et_pass = (EditText)findViewById(R.id.password);
@@ -62,17 +61,13 @@ public class SignupActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,gender);
         spinner_s.setAdapter(arrayAdapter);
 
-        //TODO: COPY HERE ARMANDO
-
-        spinner_s = (Spinner)findViewById(R.id.goal_dropdown);
+        spinner_g = (Spinner)findViewById(R.id.goal_dropdown);
         goalAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,goals);
-        spinner_s.setAdapter(goalAdapter);
+        spinner_g.setAdapter(goalAdapter);
 
-        spinner_s = (Spinner)findViewById(R.id.exer_dropdown);
+        spinner_e = (Spinner)findViewById(R.id.exer_dropdown);
         exerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,exer);
-        spinner_s.setAdapter(exerAdapter);
-        //TODO: END COPY HERE ARMANDO
-
+        spinner_e.setAdapter(exerAdapter);
 
         //Sign Up Button
         Button btnSignUp = (Button) findViewById(R.id.signup_button);
@@ -82,6 +77,7 @@ public class SignupActivity extends AppCompatActivity {
                 String name = et_name.getText().toString();
                 String age = et_age.getText().toString();
                 String height = et_height.getText().toString();
+                String height2 = et_height2.getText().toString();
                 String weight = et_weight.getText().toString();
                 String mail = et_mail.getText().toString().replace('.', ',');
                 String pass = et_pass.getText().toString();
@@ -104,7 +100,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    writeNewUser(name, age, height, weight, gd, mail, pass, go, ex);
+                    writeNewUser(name, age, height, height2, weight, gd, mail, pass, go, ex);
                     startActivity(new Intent(SignupActivity.this, Home.class));
                 }
             }
@@ -112,17 +108,20 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     //this function does a basic write (creating new user) to firebase db
-    private void writeNewUser(String name, String age, String height, String weight, String gd, String mail, String pass, String goal, String exer){
-        User u = new User(name, age, height, weight, gd, mail, pass, goal, exer);
+    private void writeNewUser(String name, String age, String height, String height2, String weight, String gd, String mail, String pass, String goal, String exer){
+        User u = new User(name, age, height, height2, weight, gd, mail, pass, goal, exer);
         User.CURRENT = u;
         HashMap <String, String> temp = new HashMap<>();
         temp.put("name", name);
         temp.put("age", age);
-        temp.put("height", height);
+        temp.put("height (ft)", height);
+        temp.put("height (in)", height2);
         temp.put("weight", weight);
         temp.put("gender", gd);
         temp.put("email", mail);
         temp.put("password", pass);
+        temp.put("goal", goal);
+        temp.put("activity level", exer);
 
         myRef.child(mail).setValue(temp);
     }

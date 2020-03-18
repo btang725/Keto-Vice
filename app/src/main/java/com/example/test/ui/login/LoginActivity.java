@@ -56,13 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                                 User.CURRENT = new User( // TODO FIX THIS
                                         (String) snapshot.child(email).child("name").getValue(),
                                         (String) snapshot.child(email).child("age").getValue(),
-                                        (String) snapshot.child(email).child("height").getValue(),
+                                        (String) snapshot.child(email).child("height (ft)").getValue(),
+                                        (String) snapshot.child(email).child("height (in)").getValue(),
                                         (String) snapshot.child(email).child("weight").getValue(),
                                         (String) snapshot.child(email).child("gender").getValue(),
                                         (String) snapshot.child(email).child("email").getValue(),
                                         (String) snapshot.child(email).child("password").getValue(),
-                                        "",
-                                        ""
+                                        (String) snapshot.child(email).child("goal").getValue(),
+                                        (String) snapshot.child(email).child("activity level").getValue()
                                 );
 
                                 Intent intent = new Intent(LoginActivity.this, Home.class);
