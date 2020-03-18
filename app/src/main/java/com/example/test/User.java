@@ -13,22 +13,24 @@ public class User {
     public String name;
     public String age;
     public String height;
+    public String height2;
     public String weight;
     public String gender;
     public String email;
     public String password;
-    public String exer;
-    public String goal;
+    public String exer; //string for acitivity level
+    public String goal; //string for weight preference
     public WeightPreference weightPreference;
     public ActivityLevel activityLevel;
 
     // Use User.CURRENT to get any needed fields
     public static User CURRENT;
 
-    public User(String name, String age, String height, String weight, String gender, String email, String password, String exer, String goal){
+    public User(String name, String age, String height, String height2, String weight, String gender, String email, String password, String goal, String exer){
         this.name = name;
         this.age = age;
         this.height = height;
+        this.height2 = height2;
         this.weight = weight;
         this.gender = gender;
         this.email = email;
