@@ -109,7 +109,32 @@ public class RecommendationActivity extends AppCompatActivity {
                                         (String) snapshot.child("Recommendations").child(bestMatchID).child("name").getValue()
                                         )
                         );
+
+
+                        calories.setText(
+                                String.format("%d cals", ((long) snapshot.child("Recommendations").child(bestMatchID).child("cal").getValue()))
+                        );
+
+
+                        fat.setText(
+                                String.format("%dg fat",
+                                        ((long) snapshot.child("Recommendations").child(bestMatchID).child("fat").getValue())
+                                )
+                        );
+
+                        carbs.setText(
+                                String.format("%dg carb",
+                                        ((long) snapshot.child("Recommendations").child(bestMatchID).child("carb").getValue())
+                                )
+                        );
+
+                        protein.setText(
+                                String.format("%dg protein",
+                                        ((long) snapshot.child("Recommendations").child(bestMatchID).child("protein").getValue())
+                                )
+                        );
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }

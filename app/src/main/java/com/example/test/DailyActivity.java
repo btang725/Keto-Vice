@@ -353,7 +353,7 @@ public class DailyActivity extends AppCompatActivity {
 
                 }
 
-                url = new URL("https://api.nal.usda.gov/fdc/v1/415048?api_key=NbU3jt6cnbykzengF4XfOuLCIRhSaXIfM7hsZOLu");
+                url = new URL(complete2);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
