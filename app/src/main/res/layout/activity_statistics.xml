@@ -8,18 +8,49 @@
     tools:context=".StatisticsActivity">
 
     <TextView
-        android:id="@+id/textMyBMI"
+        android:id="@+id/textMyCaloricNeeds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="16dp"
-        android:text="BMI: 0.0 \nYou are Underweight\n\nTry eating foods with \nhigher calories"
+        android:layout_marginStart="97dp"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:layout_marginBottom="354dp"
+        android:text="Caloric Needs: 0.0"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageYoga"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMyBMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="BMI: 0.0 \nYou are Underweight"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textMyBMR"
+        app:layout_constraintStart_toStartOf="@+id/textMyHeight"
         app:layout_constraintTop_toBottomOf="@+id/textMyHeight" />
+
+    <TextView
+        android:id="@+id/textMyBMR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:text="BMR: 0.0"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textMyCaloricNeeds"
+        app:layout_constraintStart_toStartOf="@+id/textMyBMI"
+        app:layout_constraintTop_toBottomOf="@+id/textMyBMI" />
 
     <TextView
         android:id="@+id/textMyWeight"
@@ -27,8 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="46dp"
         android:layout_marginLeft="46dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="9dp"
         android:text="Weight: 000 lb"
         android:textColor="@android:color/white"
         android:textSize="30sp"
@@ -37,31 +68,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/textMyHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="18dp"
         android:text="Height: 0'0 ft"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageYoga"
-        app:layout_constraintStart_toStartOf="@+id/textMyBMI"
+        app:layout_constraintBottom_toTopOf="@+id/textMyBMI"
+        app:layout_constraintStart_toStartOf="@+id/textMyWeight"
         app:layout_constraintTop_toBottomOf="@+id/textMyWeight" />
 
     <ImageView
         android:id="@+id/imageYoga"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginLeft="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
+        android:layout_width="298dp"
+        android:layout_height="335dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyHeight"
+        app:layout_constraintTop_toBottomOf="@+id/textMyCaloricNeeds"
+        app:layout_constraintVertical_bias="0.847"
         app:srcCompat="@drawable/stress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
